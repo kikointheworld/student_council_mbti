@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background-color: #F1F3DE;
+        }
+    </style>
+</head>
+<body class="container ">
+    <article class="start">
+        <div class="img-container">
+            <img class="titleImage" src="img/titleImage.png"></div>
+        <h1 class="mt-5 text-center">나의 MBTI는?</h1>
+        <button type="button" class="btn mt-5" onclick='start();'">테스트 시작하기</button>
+    </article>
+    <article class="question">
+        <div class="progress mt-5">
+            <div class="progress-bar" role="progressbar" style="width: calc(100/12*1%)"></div>
+        </div>
+        <h2 id="title" class="text-center mt-5">문제</h2>
+        <input id="type" type="hidden" value="EI">
+        <button id="A" type="button" class="btn mt-5">Primary</button>
+        <button id="B" type="button" class="btn mt-5">Primary</button>
+    </article>
+    <article class="result">
+        <img id="img" class="rounded-circle mt-5" src="lion.jpg" alt="animal">
+        <h2 id="animal" class="text-center mt-5">동물이름</h2>
+        <h3 id="explain" class="text-center mt-5">설명</h3>
+        <h2 id="mbti-friend" class="text-center mt-5">INFP 인 부원</h2>
+        <h3 id="mbti-friend-name" class="text-center mt-5">김선재 김선재 김선재</h3>
+        <!-- Go to www.addthis.com/dashboard to customize your tools --> <div class="share addthis_inline_share_toolbox"></div>
+    </article>
+    <article class="kakao_ad mt-5">
+        <ins class="kakao_ad_area" style="display:none;" 
+        data-ad-unit    = "DAN-uBqgWtTAOD3ZzYc2" 
+        data-ad-width   = "320" 
+        data-ad-height  = "100"></ins> 
+    </article>
+    
+<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <input type="hidden" id="EI" value="0">
+    <input type="hidden" id="SN" value="0">
+    <input type="hidden" id="TF" value="0">
+    <input type="hidden" id="JP" value="0">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>
+        var num = 1;
+        var q = {
+            1: {"title":"두근두근, 불씨 대망의 첫 부서회식!", "type":"EI", "A":"어색한 게 제일 싫어! 마이크만 쥐어주면 그 자리에서 바로 토크쇼!", "B":"먼저 말하기는 부담스러워.. 천천히 알아가고 싶어!."},
+            2: {"title":"sns조가 공개됐다! 근데 아는 사람이 한 명도 없네?", "type":"EI", "A":"오히려 좋아! 원래 이런 건 알아가는 재미지~", "B":"으악! 어떡하지.. 기대 반, 걱정 반"},
+            3: {"title":"sns 미션을 고른다면?", "type":"EI", "A":"좌충우돌 왁자지껄, 방탈출카페!", "B":"행궁동 카페에서 감성 한모금~"},
+
+            4: {"title":"학과행사를 기획해야 할 때", "type":"SN", "A":"예전엔 어떻게 했는지 한번 찾아볼까?", "B":"이건 어때? 저건 어때? 아이디어 뱅크!"},
+            5: {"title":"민트초코오이비빔밥 먹기 vs or1, 응통1 같이 듣기 중 하나를 골라야한다면?", "type":"SN", "A":"뭐래 ㅋㅋ (다음 대화 주제로)", "B":"민트초코..오이비빔밥..?? 뭔 조합이야 상상도 안가. 근데 or1이랑 응통1이랑 같이 들으면 그냥 휴학하라는 거잖아..?"},
+            6: {"title":"새로 부임하신 교수님이 개설하신 강좌가 있다. 들리는 소문에 의하면 학점 천사시라고…", "type":"SN", "A":"그래도 혹시 몰라.. 한 학기 지켜보고 들어도 늦지 않아!", "B":"하이리스크 하이리턴이지! 자, 드가자~"},
+
+            7: {"title":"응통1 수업을 같이 듣는 친구가 “ 나 너무 힘들어.. 그만 드랍할까봐” 라고 말한다면?", "type":"TF", "A":"왜? 어디가 어려운데? 어떤 부분인지 말해줘봐 한번 보게.", "B":"그치.. 나도 쉽지 않네. 그래도 좀만 더 버텨보자. 얻어가는 건 많잖아!"},
+            8: {"title":"팀플 때 매번 10분씩 늦는 팀원이 있다. 근데 성격은 참 좋다.", "type":"TF", "A":"그래도 한두번도 아니고 매번 늦는 건 아니지.", "B":"뭐 그럴 수 있지~"},
+            9: {"title":"학과행사를 마치고 불씨의 칭찬글이 올라왔다. 그 내용으로 뭐가 더 좋은지?", "type":"TF", "A":"어떻게 이런 걸 생각해서 기획했어요? 저도 같이 일하고 싶어요.", "B":"너무 재밌었어요! 이제야 대학생활 하는 것 같아요. 수고 많았어요 !"},
+            
+            10: {"title":"필요한 게 있어서 쿠팡에 접속한 당신,", "type":"JP", "A":"필요한 것만 사고 앱을 종료한다.", "B":"어? 이것도 필요할 거 같은데?"},
+            11: {"title":"나의 하루 계획은 다음에 가깝다.", "type":"JP", "A":" 9시~12시 수업 12시~13시 점심약속 13시~15시 팀플 15시~18시 수업 18시~20시 저녁약속", "B":"보람차게 살기!"},
+            12: {"title":"불씨 화상회의를 하기 전,", "type":"JP", "A":"회의 시작이 6시니까 5분 전에 미리 들어가 있는다.", "B":"후다닥, 캠에 방이 더러워보이지 않게 급히 방 정리를 한다."}
+        }
+        var result = {
+            "ISTJ":{"animal":"ISTJ", "explain":"하마 설명", "img":"img/istj.png", "mbti-friend":"ISTJ 술주정 특징", "mbti-friend-name":"귀가본능!<br>만취해도 집 잘들어감<br>갑분집"},
+            "ISFJ":{"animal":"ISFJ", "explain":"부엉이 설명", "img":"img/isfj.png", "mbti-friend":"ISFJ 술주정 특징", "mbti-friend-name":"카택달인!<br>취한 애들 카카오택시 잡아서 집 다 태워보냄"},
+            "INFJ":{"animal":"INFJ", "explain":"물소 설명", "img":"img/infj.png", "mbti-friend":"INFJ 술주정 특징", "mbti-friend-name":"\"나 2022년에 운세봄 개쩌는 점집 발견\"<br>점, 타로  본 썰 3시간 푸는 인간"},
+            "INTJ":{"animal":"INTJ", "explain":"치타 설명", "img":"img/intj.png", "mbti-friend":"INTJ 술주정 특징", "mbti-friend-name":"진지충<br>쓸데 없는 이야기도 진지하게 받아들임"},
+            "ISTP":{"animal":"ISTP", "explain":"나무늘보 설명", "img":"img/istp.png", "mbti-friend":"ISTP 술주정 특징", "mbti-friend-name":"\"애들아 올해 정말 고마웠고, 내가 표현은 못해도 진짜 사랑하는거 알지?\"<br>왈왈"},
+            "ISFP":{"animal":"ISFP", "explain":"거북이 설명", "img":"img/isfp.png", "mbti-friend":"ISFP 술주정 특징", "mbti-friend-name":"\"이제야 말하지만.. 솔직히 나 그 때 서운했음 ㅇㅇ\"<br>궁시렁 궁시렁"},
+            "INFP":{"animal":"INFP", "explain":"코끼리 설명", "img":"img/infp.png", "mbti-friend":"INFP 술주정 특징", "mbti-friend-name":"[ㄴㅏ너ㅈㅣㄴ짜 좋ㄹ아ㅎㅏㄴㄷ? ]<br>새벽 3시에 카톡보냄"},
+            "INTP":{"animal":"INTP", "explain":"침팬지 설명", "img":"img/intp.png", "mbti-friend":"INTP 술주정 특징", "mbti-friend-name":"\"넌 이런 모습은 좀 아닌 것 같아..\"<br>갑분 충고형"},
+            "ESTP":{"animal":"ESTP", "explain":"악어 설명", "img":"img/estp.png", "mbti-friend":"ESTP 술주정 특징", "mbti-friend-name":"생일 머리띠, 크리스마스 루돌프 머리띠끼고 거리활보 ^^*"},
+            "ESFP":{"animal":"ESFP", "explain":"미어캣 설명", "img":"img/esfp.png", "mbti-friend":"ESFP 술주정 특징", "mbti-friend-name":"인싸중에 인싸<br>아무도 못말림<br>하 이 텐 션 zl존"},
+            "ENFP":{"animal":"ENFP", "explain":"멋쟁이 사자 설명", "img":"img/enfp.jfif", "mbti-friend":"ENFP 술주정 특징", "mbti-friend-name":"이 구역의 수도꼭지<br>술자리 필수 준비물 눈물"},
+            "ENTP":{"animal":"ENTP - 고민보단 고!", "explain":"일단 저지르고 보는 당신은 선입견 없이 그대로를 받아들일 수 있는 개방적인 마인드의 소유자에요. 주변 환경에 따라 시시각각 자신을 변화시킬 수 있는 센스쟁이인 당신. 때론 직설적이고 솔직하게 표현하는 탓에 종종 오해를 사기도 하지만 좋아하는 사람에겐 한없이 친절한 좋은 친구랍니다. ‘재미’가 원동력인 당신, 불씨에서 재밌는 추억 함께 만들어가봐요!", "img":"img/entp.png", "mbti-friend":"ENTP 술주정 특징", "mbti-friend-name":"옆테이블한테 시비걸거나 옆테이블이랑 호형호제 잼"},
+            "ESTJ":{"animal":"ESTJ", "explain":"기린 설명", "img":"img/estj.png", "mbti-friend":"ESTJ 술주정 특징", "mbti-friend-name":"\"현실적으로 생각해보자 ㅇㅇ\"<br>현실직시형<br>AKA 프로찬물러"},
+            "ESFJ":{"animal":"ESFJ", "explain":"고릴라 설명", "img":"img/esfj.png", "mbti-friend":"ESFJ 술주정 특징", "mbti-friend-name":"\"초코에몽 먹을사람?\"<br>자발적 우유, 상쾌환 셔틀"},
+            "ENFJ":{"animal":"ENFJ", "explain":"카피바라 설명", "img":"img/enfj.png", "mbti-friend":"ENFJ 술주정 특징", "mbti-friend-name":"수도꼭지랑 쎄뚜쎄뚜<br>우는 애들 고민 상담 전문가<br>쓸떼없이 진지함"},
+            "ENTJ":{"animal":"ENTJ", "explain":"호랑이 설명", "img":"img/entj.png", "mbti-friend":"ENTJ 술주정 특징", "mbti-friend-name":"저번엔 인생4컷 사업하자더니 오늘은 카페차리자함<br>사업 하자 잼"}
+        }
+        function start(){
+            $(".start").hide();
+            $(".question").show();
+            next();
+
+        }
+        $("#A").click(function(){
+            var type = $("#type").val();
+            var preValue = $("#"+type).val();
+            $("#"+type).val(parseInt(preValue)+1);
+            next();
+        });
+        $("#B").click(function(){
+            next();
+        });
+        function next(){
+            if (num==13){
+                $(".question").hide();
+                $(".result").show();
+                var mbti = "";
+                ($("#EI").val() <2) ? mbti+="I": mbti+="E";
+                ($("#SN").val() <2) ? mbti+="N": mbti+="S";
+                ($("#TF").val() <2) ? mbti+="F": mbti+="T";
+                ($("#JP").val() <2) ? mbti+="P": mbti+="J";
+
+                $("#img").attr("src",result[mbti]["img"]);
+                $("#animal").html(result[mbti]["animal"]);
+                $("#explain").html(result[mbti]["explain"]);
+
+                $("#mbti-friend").html(result[mbti]["mbti-friend"]);
+                $("#mbti-friend-name").html(result[mbti]["mbti-friend-name"]);
+
+            
+            } else{
+                $(".progress-bar").attr('style','width: calc(100/12*'+num+'%)');
+                $("#title").html(q[num]["title"]);
+                $("#type").val(q[num]["type"]);
+                $("#A").html(q[num]["A"]);
+                $("#B").html(q[num]["B"]);
+                num++;
+            }
+        }
+    </script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60c8b49d6457b923"></script>
+</body>
+</html>

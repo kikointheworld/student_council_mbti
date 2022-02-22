@@ -1,0 +1,59 @@
+body {
+  font-family: "Jua", sans-serif;
+}
+article {
+  display: flex;
+  flex-direction: column;
+}
+
+.question {
+  display: none;
+}
+
+.result {
+  display: none;
+}
+
+#img {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+.share {
+  margin: 0 auto;
+}
+.kakao_ad {
+  width: 320px;
+  margin: 0 auto;
+}
+
+.btn {
+  background-color: #eb8f8f;
+  border-color: #eb8f8f;
+}
+
+.btn:hover {
+  background-color: #ca7676;
+  border-color: #ca7676;
+}
+
+.progress-bar {
+  background-color: #eb8f8f;
+  border-color: #eb8f8f;
+}
+
+.img-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-center {
+  margin-top: 0px;
+}
+
+.logo-img-container {
+  margin-top: 10px;
+  top: 10px;
+}
